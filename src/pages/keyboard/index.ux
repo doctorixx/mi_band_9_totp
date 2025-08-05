@@ -1,0 +1,75 @@
+<import name="input-method" src="../../components/InputMethod/InputMethod.ux"></import>
+<template>
+  <div>
+    <div class="page" style="flex-direction: column;">
+      <text class="text" @click="changeState" @longpress="onexit">
+        {{textValue}}
+      </text>
+      <input-method
+        hide="{{hide}}"
+        keyboardtype="{{keyboardtype}}"
+        maxlength="5"
+        vibratemode="{{vibratemode}}"
+        screentype="{{screentype}}"
+        @visibility-change="onVisibilityChange"
+        @key-down="onKeyDown"
+        @delete="onDelete"
+        @complete="onComplete"
+      ></input-method>
+    </div>
+  </div>
+  
+</template>
+
+<script>
+import app from "@system.app"
+
+export default {
+  private: {
+    textValue: "",
+    hide: false,
+    keyboardtype: "QWERTY", //QWERTY, T9
+    vibratemode: "short",
+    screentype: "pill-shaped", //pill-shaped, rect, circle
+  },
+  onVisibilityChange(evt) {
+    console.log("显示状态变更:"+JSON.stringify(evt));
+  },
+  onexit() {
+    app.terminate()
+  },
+  onKeyDown(evt) {
+    // this.textValue += evt.detail.content;
+    console.log("按下按键:"+JSON.stringify(evt));
+  },
+  onDelete() {
+    this.textValue = this.textValue.slice(0, -1);
+    console.log("删除字符");
+  },
+  changeState() {
+    this.hide = !this.hide;
+  },
+  onComplete(evt) {
+    this.textValue += evt.detail.content;
+    console.log("返回字符:"+JSON.stringify(evt));
+  },
+};
+
+</script>
+
+<style>
+.page{
+  width:480px;
+  height:480px;
+}
+
+.text{
+  position:absolute;
+  left:0;
+  top:30px;
+  width:100%;
+  text-align:center;
+  color:white;
+  background-color: red;
+}
+</style>

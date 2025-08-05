@@ -1,100 +1,91 @@
 <template>
-  <div class="demo-page">
-    <text class="title wht nowrap">TOTP генератор </text>
-      <text class="title wht nowrap">{{goida}}</text>
-      <!-- <progress class="p1" percent="50"></progress>  -->
-    <!-- 点击跳转详情页 -->
-    <input class="btn" type="button" value="выход" onclick="routeDetail" />
-    <input class="btn" type="button" value="генерация" onclick="cr" />
+  <div class="page">
+    <list class="list">
+      <list-item for="{{productList}}" class="item" type="list-item" @click="() => {nav($item.key,$item.name)}" @longpress="delete_page($item.name)">
+        <marquee scrollamount={{16}} if="{{$item.key}}" >
+          {{$item.name}}
+        </marquee>
+      </list-item>
+      <list-item class="item cent" type="list-item" style="background-color: green">
+       <text class="cent" >  добавить </text>
+      </list-item>
+      <list-item class="item" type="list-item" style="background-color: green" @click="exit" >
+        <text class="cent" >    выход </text>
+       </list-item>
+    </list>
   </div>
 </template>
 
 <script>
-import router from "@system.router"
+import router from '@system.router' 
 import app from '@system.app' 
-import crypto from '@system.crypto' 
-import  totp  from "./totp";
 
-
-export default {
-  // 页面级组件的数据模型，影响传入数据的覆盖机制：private内定义的属性不允许被覆盖
-  private: {
-    title: "示例页面",
-    goida: "123"
-  },
-
-  routeDetail() {
-    // 跳转到应用内的某个页面，router用法详见：文档->接口->页面路由
-    app.terminate()
-  },
-
-  cr() {
-    // 跳转到应用内的某个页面，router用法详见：文档->接口->页面路由
-    // crypto.hmacDigest({
-    //   data: 'hello',
-    //   algo: 'SHA256',
-    //   key: 'a secret',
-    //   success: function(res) {
-    //     console.log(`### crypto.hmacDigest success:`, res.data)
-    //   },
-    //   fail: function(data, code) {
-    //     console.log(`### crypto.hmacDigest fail ### ${code}: ${data}`)
-    //   }
-    // })
-    
-    
-
-    const secret = "3JG7M5CHNVQWSBX35HCHRXENFZUNS4CW";
-const totp_i = new totp.TOTP(secret);
-const code = totp_i.generate();
-const isValid = totp_i.verify(code);
-const remaining = totp_i.getRemainingSeconds();
-
-this.goida = code
-
-// generateTOTP(secret, function(error, code) {
-//   if (error) {
-//     console.error("TOTP generation failed:", error);
-//   } else {
-//     console.log("TOTP:", code); // Example: "492039"
-//     this.goida = code
-//   }
-// }.bind(this));
-
-  },
-}
+  export default {
+    data: {
+      productList: [
+        { name: 'cloud.ru', price: '100', key:"totpkey" },
+        { name: 'vk', price: '200', key: "totpkey" },
+        { name: 'cloud.rucloud.ru', price: '200' },
+        { name: 'no', price: '200' },
+        { name: '12', price: '200' },
+        { name: '12', price: '200' },
+        { name: 'cloud.rucloud.ru', price: '200' },
+        { name: 'google', price: '100' },
+        { name: 'cloud.ru', price: '200' },
+        { name: 'cloud.rucloud.ru', price: '200' },
+        { name: 'no', price: '200' },
+        { name: '12', price: '200' },
+        { name: '12', price: '200' },
+        { name: 'cloud.rucloud.ru', price: '200' },
+      ],
+    },
+    nav(key,name) {
+      router.push({
+      uri: '/pages/detail',
+      params: {
+        test: key,
+        key: key,
+        name: name
+      }
+    })
+    },
+    delete_page(name) {
+      router.push({
+      uri: '/pages/remove',
+      params: {
+        name: name
+      }
+    })
+    },
+    exit() {
+      app.terminate()
+    },
+  }
 </script>
 
 <style>
-.demo-page {
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.title {
-  font-size: 20px;
-  text-align: center;
-
-}
-
-.wht{
-  color: #ffffff;
-}
-
-.nowrap {
-    white-space: nowrap;
+  .page {
+    padding: 5px;
+    padding-top: 60px;
+    padding-bottom: 40px;
   }
 
-.btn {
-  width: 150px;
-  height: 40px;
-  margin-top: 20px;
-  border-radius: 5px;
-  background-color: #8f3fff;
-  font-size: 20px;
-  background-clip: text;
-  color: #ffffff;
-  border-radius: 20px;
-}
+  .list {
+    width: 100%;
+    height: 100%;
+    color: #ffffff;
+  }
+
+  .item {
+    height: 80px;
+    padding: 10px;
+    color: #ffffff;
+    /* border: 1px solid #ffffff; */
+    margin-bottom: 10px;
+    border-radius: 25px;
+    background-color: rgb(51, 51, 51);
+  }
+  .cent {
+    text-align: center
+  }
 </style>

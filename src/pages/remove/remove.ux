@@ -3,17 +3,16 @@
     <text class="title">{{ text }}</text>
     <text class="title">({{name}})</text>
     <text class="title">{{totpText}}</text>
-    <input class="btn green" type="button" value='обновить' @click="onTotpClick(11)">обновить</input>
+    <input disabled class="btn green" type="button" value='удалить' @click="onTotpClick(11)">обновить</input>
     <input class="btn ref" type="button" value='назад' @click="onExitClick">назад</input>
   </div>
 </template>
 
 <script>
 import router from '@system.router' 
-import totp from "./totp"
 export default {
   private: {
-    text: "Просмотр totp",
+    text: "Вы ходите удалить запись?",
     totpText: "- - - - - - "
   },
   protected: {
@@ -22,8 +21,6 @@ export default {
       name: ''
   },
   onTotpClick() {
-    const totp_instance = new totp.TOTP(this.key)
-    this.totpText = totp_instance.generate()
   },
   onExitClick() {
     router.back()
