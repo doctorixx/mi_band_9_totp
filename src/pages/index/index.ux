@@ -1,8 +1,11 @@
 <template>
   <div class="page">
     <list class="list">
+      <list-item>
+        <text>TOTP</text>
+      </list-item>
       <list-item for="{{productList}}" class="item" type="list-item" @click="() => {nav($item.key,$item.name)}" @longpress="delete_page($item.name)">
-        <marquee scrollamount={{16}} if="{{$item.key}}" >
+        <marquee scrollamount="{{48}}" if="{{$item.key}}" >
           {{$item.name}}
         </marquee>
       </list-item>
@@ -25,7 +28,7 @@ import app from '@system.app'
       productList: [
         { name: 'cloud.ru', price: '100', key:"totpkey" },
         { name: 'vk', price: '200', key: "totpkey" },
-        { name: 'cloud.rucloud.ru', price: '200' },
+        { name: 'cloud.rucloud.ru', key: '200' },
         { name: 'no', price: '200' },
         { name: '12', price: '200' },
         { name: '12', price: '200' },
