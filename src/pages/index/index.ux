@@ -1,0 +1,186 @@
+<template>
+  <div class="demo-page">
+    <text class="title wht nowrap">Максимум
+      возможностей
+      для общения </text>
+      <text class="title wht nowrap">{{goida}}</text>
+    <!-- 点击跳转详情页 -->
+    <input class="btn" type="button" value="exit" onclick="routeDetail" />
+    <input class="btn" type="button" value="cr" onclick="cr" />
+  </div>
+</template>
+
+<script>
+import router from "@system.router"
+import app from '@system.app' 
+import crypto from '@system.crypto' 
+
+function generateTOTP(secretBase32, callback, timeStep = 30, digits = 6) {
+  try {
+    // 1. Decode Base32 secret
+    const secret = base32ToBytes(secretBase32);
+    
+    // 2. Get current Unix time counter (integer, steps of 30s)
+    let counter = Math.floor(Date.now() / 1000 / timeStep);
+    
+    // 3. Convert counter to 8-byte buffer (big-endian)
+    const counterBytes = new Uint8Array(8);
+    for (let i = 7; i >= 0; i--) {
+      counterBytes[i] = counter & 0xff;
+      counter >>= 8;
+    }
+    
+    // 4. Convert secret and counter to appropriate format for crypto.hmacDigest
+    const secretHex = bytesToHex(secret);
+    const counterHex = bytesToHex(counterBytes);
+    
+    // 5. HMAC-SHA1 using crypto.hmacDigest
+    crypto.hmacDigest({
+      data: counterHex,
+      algo: 'SHA1', // TOTP standard uses SHA1
+      key: secretHex,
+      success: function(res) {
+        try {
+          // Convert result back to bytes for dynamic truncation
+          const hmac = hexToBytes(res.data);
+          
+          // 6. Dynamic truncation
+          const offset = hmac[hmac.length - 1] & 0xf;
+          const code = ((hmac[offset] & 0x7f) << 24) |
+                       ((hmac[offset + 1] & 0xff) << 16) |
+                       ((hmac[offset + 2] & 0xff) << 8) |
+                       (hmac[offset + 3] & 0xff);
+          
+          // 7. Get final TOTP code
+          const otp = code % (10 ** digits);
+          const totpCode = otp.toString().padStart(digits, '0');
+          
+          callback(null, totpCode);
+        } catch (error) {
+          callback(error, null);
+        }
+      },
+      fail: function(data, code) {
+        callback(new Error(`HMAC failed: ${code} - ${data}`), null);
+      }
+    });
+    
+  } catch (error) {
+    callback(error, null);
+  }
+}
+
+// Helper: Base32 decoding (RFC 4648)
+function base32ToBytes(base32) {
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+  const clean = base32.replace(/=+$/, '').toUpperCase().replace(/[^A-Z2-7]/g, '');
+  const bytes = [];
+  let bits = 0;
+  let value = 0;
+  
+  for (let i = 0; i < clean.length; i++) {
+    const idx = alphabet.indexOf(clean[i]);
+    if (idx === -1) continue;
+    value = (value << 5) | idx;
+    bits += 5;
+    if (bits >= 8) {
+      bytes.push((value >>> (bits - 8)) & 0xff);
+      bits -= 8;
+    }
+  }
+  return new Uint8Array(bytes);
+}
+
+// Helper: Convert bytes to hex string
+function bytesToHex(bytes) {
+  return Array.from(bytes)
+    .map(byte => byte.toString(16).padStart(2, '0'))
+    .join('');
+}
+
+// Helper: Convert hex string to bytes
+function hexToBytes(hex) {
+  const bytes = [];
+  for (let i = 0; i < hex.length; i += 2) {
+    bytes.push(parseInt(hex.substr(i, 2), 16));
+  }
+  return new Uint8Array(bytes);
+}
+
+
+export default {
+  // 页面级组件的数据模型，影响传入数据的覆盖机制：private内定义的属性不允许被覆盖
+  private: {
+    title: "示例页面",
+    goida: "123"
+  },
+
+  routeDetail() {
+    // 跳转到应用内的某个页面，router用法详见：文档->接口->页面路由
+    app.terminate()
+  },
+
+  cr() {
+    // 跳转到应用内的某个页面，router用法详见：文档->接口->页面路由
+    // crypto.hmacDigest({
+    //   data: 'hello',
+    //   algo: 'SHA256',
+    //   key: 'a secret',
+    //   success: function(res) {
+    //     console.log(`### crypto.hmacDigest success:`, res.data)
+    //   },
+    //   fail: function(data, code) {
+    //     console.log(`### crypto.hmacDigest fail ### ${code}: ${data}`)
+    //   }
+    // })
+    
+    
+
+    const secret = "JBSWY3DPEHPK3PXP";
+
+    generateTOTP(secret, function(error, code) {
+  if (error) {
+    console.error("TOTP generation failed:", error);
+  } else {
+    console.log("TOTP:", code); // Example: "492039"
+    this.goida = code
+  }
+}.bind(this));
+
+  },
+}
+</script>
+
+<style>
+.demo-page {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  font-size: 20px;
+  text-align: center;
+
+}
+
+.wht{
+  color: #ffffff;
+}
+
+.nowrap {
+    white-space: nowrap;
+  }
+
+.btn {
+  width: 150px;
+  height: 40px;
+  margin-top: 20px;
+  border-radius: 5px;
+  background-color: #8f3fff;
+  font-size: 20px;
+  background-clip: text;
+  color: #ffffff;
+  border-radius: 20px;
+}
+</style>
