@@ -1,0 +1,57 @@
+<template>
+  <div class="demo-page">
+    <text class="title">{{ text }}</text>
+    <text class="title">({{name}})</text>
+    <text class="title">{{key}}</text>
+    <input class="btn green" type="button" value='обновить' @click="onTotpClick(11)">обновить</input>
+    <input class="btn ref" type="button" value='назад' @click="onExitClick">назад</input>
+  </div>
+</template>
+
+<script>
+import router from '@system.router' 
+export default {
+  private: {
+    text: "Просмотр totp",
+    totpText: "- - - - - - "
+  },
+  protected: {
+      key: '',
+      name: ''
+  },
+  onTotpClick() {
+  },
+  onExitClick() {
+    router.back()
+  }
+}
+</script>
+
+<style>
+.demo-page {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color:aliceblue
+}
+
+.btn {
+  width: 200px;
+  height: 40px;
+  margin-top: 20px;
+  border-radius: 5px;
+  font-size: 20px;
+  color: #ffffff;
+}
+
+.green{
+  background-color: #09ba07;
+}
+.ref{
+  background-color: #dd5119;
+}
+
+.title {
+  text-align: center;
+}
+</style>

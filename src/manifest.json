@@ -40,6 +40,18 @@
       },
       "pages/remove": {
         "component": "remove"
+      },
+      "pages/keyboard": {
+        "component": "index"
+      },
+      "pages/keyboardkey": {
+        "component": "index"
+      },
+      "pages/keyboardname": {
+        "component": "index"
+      },
+      "pages/finalcreate": {
+        "component": "detail"
       }
     }
   }

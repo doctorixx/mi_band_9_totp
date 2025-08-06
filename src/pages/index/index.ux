@@ -9,7 +9,7 @@
           {{$item.name}}
         </marquee>
       </list-item>
-      <list-item class="item cent" type="list-item" style="background-color: green">
+      <list-item class="item cent" type="list-item" style="background-color: green" @click="create_page"> 
        <text class="cent" >  добавить </text>
       </list-item>
       <list-item class="item" type="list-item" style="background-color: green" @click="exit" >
@@ -29,17 +29,6 @@ import app from '@system.app'
         { name: 'cloud.ru', price: '100', key:"totpkey" },
         { name: 'vk', price: '200', key: "totpkey" },
         { name: 'cloud.rucloud.ru', key: '200' },
-        { name: 'no', price: '200' },
-        { name: '12', price: '200' },
-        { name: '12', price: '200' },
-        { name: 'cloud.rucloud.ru', price: '200' },
-        { name: 'google', price: '100' },
-        { name: 'cloud.ru', price: '200' },
-        { name: 'cloud.rucloud.ru', price: '200' },
-        { name: 'no', price: '200' },
-        { name: '12', price: '200' },
-        { name: '12', price: '200' },
-        { name: 'cloud.rucloud.ru', price: '200' },
       ],
     },
     nav(key,name) {
@@ -58,6 +47,11 @@ import app from '@system.app'
       params: {
         name: name
       }
+    })
+    },
+    create_page() {
+      router.push({
+      uri: '/pages/keyboardname',
     })
     },
     exit() {

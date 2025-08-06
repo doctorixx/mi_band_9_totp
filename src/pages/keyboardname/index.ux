@@ -11,7 +11,7 @@
       <text class="help-text">
         для редактирования нажмите на поле
       </text>
-      <input type='btn' class='btn' value='далее'/>
+      <input type='button' class='btn' value='далее' @click="heh"/>
       <input-method
         hide="{{hide}}"
         keyboardtype="{{keyboardtype}}"
@@ -30,6 +30,7 @@
 
 <script>
 import app from "@system.app"
+import router from "@system.router"
 
 export default {
   private: {
@@ -60,6 +61,14 @@ export default {
     this.textValue += evt.detail.content;
     console.log("返回字符:"+JSON.stringify(evt));
   },
+  heh() {
+    router.push({
+      uri: '/pages/keyboardkey',
+      params: {
+        name: this.textValue
+      }
+    })
+  }
 };
 
 </script>
