@@ -1,40 +1,23 @@
-## 快速上手
+## TOTP app for xiaomi mi band 9
 
-### 1. 开发
+> [!NOTE] 
+> Generate totp at mi band without ethernet
 
-```
-npm install
-npm run start
-```
+![alt text](images/image.png)
 
-### 2. 构建
+### 1. Add TOTP entry
 
-```
-npm run build
-npm run release
-```
-
-### 3. 调试
-
-```
-npm run watch
-```
-### 4. 代码规范化配置
-代码规范化可以帮助开发者在git commit前进行代码校验、格式化、commit信息校验
-
-使用前提：必须先关联git
-
-macOS or Linux
-```
-sh husky.sh
-```
-
-windows
-```
-./husky.sh
-```
+Add entry (Name and TOTP)
+![alt text](images/image-1.png)
 
 
-## 了解更多
+### 2. List of save totps
+![alt text](images/image-2.png)
 
-你可以通过我们的[官方文档](https://iot.mi.com/vela/quickapp)熟悉和了解快应用。
+
+### 3. Generate TOTP
+![alt text](images/image-3.png)
+
+
+## Other images
+![alt text](images/image-4.png)
