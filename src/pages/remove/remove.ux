@@ -3,13 +3,15 @@
     <text class="title">{{ text }}</text>
     <text class="title">({{name}})</text>
     <text class="title">{{totpText}}</text>
-    <input disabled class="btn green" type="button" value='удалить' @click="onTotpClick(11)">обновить</input>
+    <input class="btn green" type="button" value='удалить' @click="onTotpClick">обновить</input>
     <input class="btn ref" type="button" value='назад' @click="onExitClick">назад</input>
   </div>
 </template>
 
 <script>
 import router from '@system.router' 
+import storage from '@system.storage'
+
 export default {
   private: {
     text: "Вы ходите удалить запись?",
@@ -18,13 +20,31 @@ export default {
   protected: {
       test: '',
       key: '',
-      name: ''
+      name: '',
+      totps: []
   },
   onTotpClick() {
+    console.error("123")
+    console.log({key:this.key, name:this.name, totps:this.totps})
+    const callback = () => {
+      router.push({uri: "/pages/index"})
+    }
+
+    const modified = this.totps.filter((el) => { el.name != this.name})
+    console.error(modified)
+    storage.set({key:this.key, value: JSON.stringify(modified), success: callback})
   },
   onExitClick() {
     router.back()
-  }
+  },
+  onReady () {
+    const callback = function (data_string) {
+      const data_obj = JSON.parse(data_string)
+      this.totps = data_obj
+    }.bind(this)
+
+    storage.get({key:"totps", default:"[]", success: callback})
+  },
 }
 </script>
 

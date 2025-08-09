@@ -13,7 +13,8 @@
             nav($item.key, $item.name)
           }
         "
-        @longpress="delete_page($item.name)"
+        @longpress="() => delete_page($item.name)"
+        tid="uniqu979"
       >
         <marquee scrollamount="{{ 48 }}" if="{{ $item.key }}">
           {{ $item.name }}
@@ -30,6 +31,12 @@
       <list-item class="item" type="list-item" style="background-color: green" @click="exit">
         <text class="cent">    выход</text>
       </list-item>
+      <list-item class="item" type="list-item" style="background-color: green" @click="task1">
+        <text class="cent">test1</text>
+      </list-item>
+      <list-item class="item" type="list-item" style="background-color: green" @click="task2">
+        <text class="cent">test2</text>
+      </list-item>
     </list>
   </div>
 </template>
@@ -37,13 +44,14 @@
 <script>
 import router from "@system.router"
 import app from "@system.app"
+import storage from "@system.storage"
 
 export default {
   data: {
     productList: [
-      {name: "cloud.ru", price: "100", key: "totpkey"},
-      {name: "vk", price: "200", key: "totpkey"},
-      {name: "cloud.rucloud.ru", key: "200"}
+      // {name: "cloud.ru", price: "100", key: "totpkey"},
+      // {name: "vk", price: "200", key: "totpkey"},
+      // {name: "cloud.rucloud.ru", key: "200"}
     ]
   },
   nav(key, name) {
@@ -71,6 +79,42 @@ export default {
   },
   exit() {
     app.terminate()
+
+  },
+  onReady () {
+    console.log("products-out")
+      console.log(this.productList)
+    const callback = function (data_string) {
+      console.log("list")
+      console.log(data_string)
+      console.log("products")
+      console.log(this.productList)
+      const data_obj = JSON.parse(data_string)
+      console.log("parsed")
+      console.log(data_obj)
+      this.productList = data_obj
+      console.log(data_string)
+    }.bind(this)
+
+    storage.get({key:"totps", default:"[]", success: callback})
+  },
+  async task1() {
+    // const d = await storage.get({key:"ru.doctorixx.totp-data", default:"[]"})
+    // console.log(d)
+    // console.log(this.productList)
+    const mock = '[{"name":"hard","price":"100","key":"11"},{"name":"coded","price":"200","key":"totpkey"},{"name":"vals","key":"200"}]'
+
+    storage.set({key:"totps", value:mock})
+    this.productList = JSON.parse(mock);
+  },
+  async task2() {
+    // const d = await storage.get({key:"ru.doctorixx.totp-data", default:"[]"})
+    // console.log(d)
+    // console.log(this.productList)
+    // const mock = '[{"name":"hard","price":"100","key":"11"},{"name":"coded","price":"200","key":"totpkey"},{"name":"vals","key":"200"}]'
+    
+    storage.set({key:"totps", value:"[]"})
+    this.productList = []
   }
 }
 </script>

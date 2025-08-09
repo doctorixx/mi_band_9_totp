@@ -10,16 +10,36 @@
 
 <script>
 import router from '@system.router' 
+import storage from '@system.storage'
+
 export default {
   private: {
-    text: "Просмотр totp",
+    text: "Создать totp",
     totpText: "- - - - - - "
   },
   protected: {
       key: '',
-      name: ''
+      name: '',
+      totps: []
+  },
+  onReady () {
+    const callback = function (data_string) {
+      const data_obj = JSON.parse(data_string)
+      this.totps = data_obj
+    }.bind(this)
+
+    storage.get({key:"totps", default:"[]", success: callback})
   },
   onTotpClick() {
+  const success_callback = () => {
+    router.push({
+        uri: "/pages/index",
+      })
+  }
+
+    this.totps.push({name:this.name, key:this.key, })
+    storage.set({key:"totps", value: JSON.stringify(this.totps), success: success_callback})
+    
   },
   onExitClick() {
     router.back()
