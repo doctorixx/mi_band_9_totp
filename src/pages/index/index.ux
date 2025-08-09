@@ -4,85 +4,100 @@
       <list-item>
         <text>TOTP</text>
       </list-item>
-      <list-item for="{{productList}}" class="item" type="list-item" @click="() => {nav($item.key,$item.name)}" @longpress="delete_page($item.name)">
-        <marquee scrollamount="{{48}}" if="{{$item.key}}" >
-          {{$item.name}}
+      <list-item
+        for="{{ productList }}"
+        class="item"
+        type="list-item"
+        @click="
+          () => {
+            nav($item.key, $item.name)
+          }
+        "
+        @longpress="delete_page($item.name)"
+      >
+        <marquee scrollamount="{{ 48 }}" if="{{ $item.key }}">
+          {{ $item.name }}
         </marquee>
       </list-item>
-      <list-item class="item cent" type="list-item" style="background-color: green" @click="create_page"> 
-       <text class="cent" >  добавить </text>
+      <list-item
+        class="item cent"
+        type="list-item"
+        style="background-color: green"
+        @click="create_page"
+      >
+        <text class="cent">     add</text>
       </list-item>
-      <list-item class="item" type="list-item" style="background-color: green" @click="exit" >
-        <text class="cent" >    выход </text>
-       </list-item>
+      <list-item class="item" type="list-item" style="background-color: green" @click="exit">
+        <text class="cent">    выход</text>
+      </list-item>
     </list>
   </div>
 </template>
 
 <script>
-import router from '@system.router' 
-import app from '@system.app' 
+import router from "@system.router"
+import app from "@system.app"
 
-  export default {
-    data: {
-      productList: [
-        { name: 'cloud.ru', price: '100', key:"totpkey" },
-        { name: 'vk', price: '200', key: "totpkey" },
-        { name: 'cloud.rucloud.ru', key: '200' },
-      ],
-    },
-    nav(key,name) {
-      router.push({
-      uri: '/pages/detail',
+export default {
+  data: {
+    productList: [
+      {name: "cloud.ru", price: "100", key: "totpkey"},
+      {name: "vk", price: "200", key: "totpkey"},
+      {name: "cloud.rucloud.ru", key: "200"}
+    ]
+  },
+  nav(key, name) {
+    router.push({
+      uri: "/pages/detail",
       params: {
         test: key,
         key: key,
         name: name
       }
     })
-    },
-    delete_page(name) {
-      router.push({
-      uri: '/pages/remove',
+  },
+  delete_page(name) {
+    router.push({
+      uri: "/pages/remove",
       params: {
         name: name
       }
     })
-    },
-    create_page() {
-      router.push({
-      uri: '/pages/keyboardname',
+  },
+  create_page() {
+    router.push({
+      uri: "/pages/keyboardname"
     })
-    },
-    exit() {
-      app.terminate()
-    },
+  },
+  exit() {
+    app.terminate()
   }
+}
 </script>
 
 <style>
-  .page {
-    padding: 5px;
-    padding-top: 60px;
-    padding-bottom: 40px;
-  }
+.page {
+  padding: 5px;
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
 
-  .list {
-    width: 100%;
-    height: 100%;
-    color: #ffffff;
-  }
+.list {
+  width: 100%;
+  height: 100%;
+  color: #ffffff;
+}
 
-  .item {
-    height: 80px;
-    padding: 10px;
-    color: #ffffff;
-    /* border: 1px solid #ffffff; */
-    margin-bottom: 10px;
-    border-radius: 25px;
-    background-color: rgb(51, 51, 51);
-  }
-  .cent {
-    text-align: center
-  }
+.item {
+  height: 80px;
+  padding: 10px;
+  color: #ffffff;
+  /* border: 1px solid #ffffff; */
+  margin-bottom: 10px;
+  border-radius: 25px;
+  background-color: rgb(51, 51, 51);
+}
+.cent {
+  text-align: center;
+}
 </style>

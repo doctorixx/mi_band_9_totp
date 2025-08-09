@@ -1,23 +1,19 @@
 <import name="input-method" src="../../components/InputMethod/InputMethod.ux"></import>
 <template>
   <div>
-    <div class="page" style="flex-direction: column;">
-      <text class="help-text">
-        Имя
-      </text>
+    <div class="page" style="flex-direction: column">
+      <text class="help-text">Имя</text>
       <text class="text" @click="changeState" @longpress="onexit">
-        {{textValue}}
+        {{ textValue }}
       </text>
-      <text class="help-text">
-        для редактирования нажмите на поле
-      </text>
-      <input type='button' class='btn' value='далее' @click="heh"/>
+      <text class="help-text">для редактирования нажмите на поле</text>
+      <input type="button" class="btn" value="далее" @click="heh" />
       <input-method
-        hide="{{hide}}"
-        keyboardtype="{{keyboardtype}}"
+        hide="{{ hide }}"
+        keyboardtype="{{ keyboardtype }}"
         maxlength="5"
-        vibratemode="{{vibratemode}}"
-        screentype="{{screentype}}"
+        vibratemode="{{ vibratemode }}"
+        screentype="{{ screentype }}"
         @visibility-change="onVisibilityChange"
         @key-down="onKeyDown"
         @delete="onDelete"
@@ -25,7 +21,6 @@
       ></input-method>
     </div>
   </div>
-  
 </template>
 
 <script>
@@ -38,66 +33,65 @@ export default {
     hide: true,
     keyboardtype: "QWERTY", //QWERTY, T9
     vibratemode: "short",
-    screentype: "pill-shaped", //pill-shaped, rect, circle
+    screentype: "pill-shaped" //pill-shaped, rect, circle
   },
   onVisibilityChange(evt) {
-    console.log("显示状态变更:"+JSON.stringify(evt));
+    console.log("显示状态变更:" + JSON.stringify(evt))
   },
   onexit() {
     app.terminate()
   },
   onKeyDown(evt) {
     // this.textValue += evt.detail.content;
-    console.log("按下按键:"+JSON.stringify(evt));
+    console.log("按下按键:" + JSON.stringify(evt))
   },
   onDelete() {
-    this.textValue = this.textValue.slice(0, -1);
-    console.log("删除字符");
+    this.textValue = this.textValue.slice(0, -1)
+    console.log("删除字符")
   },
   changeState() {
-    this.hide = !this.hide;
+    this.hide = !this.hide
   },
   onComplete(evt) {
-    this.textValue += evt.detail.content;
-    console.log("返回字符:"+JSON.stringify(evt));
+    this.textValue += evt.detail.content
+    console.log("返回字符:" + JSON.stringify(evt))
   },
   heh() {
     router.push({
-      uri: '/pages/keyboardkey',
+      uri: "/pages/keyboardkey",
       params: {
         name: this.textValue
       }
     })
   }
-};
-
+}
 </script>
 
 <style>
-.page{
-  width:192px;
-  height:490px;
+.page {
+  width: 192px;
+  height: 490px;
   margin-top: 30px;
 }
 
-.text{
-  width:100%;
-  min-height:50px;
-  text-align:center;
-  color:white;
+.text {
+  width: 100%;
+  min-height: 50px;
+  text-align: center;
+  color: white;
   background-color: red;
 }
 
-.help-text{
-  width:100%;
-  min-height:50px;
-  text-align:center;
-  color:white;
+.help-text {
+  width: 100%;
+  min-height: 50px;
+  text-align: center;
+  color: white;
   font-size: 20px;
   /* background-color: red; */
 }
 
-.btn{
+.btn {
   width: 100%;
   font-size: 25px;
   height: 50px;
