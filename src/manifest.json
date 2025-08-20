@@ -1,7 +1,7 @@
 {
-  "package": "ru.doctorixx.testapp",
-  "name": "MAX",
-  "versionName": "3.0.2",
+  "package": "ru.doctorixx.totpapp",
+  "name": "TOTP Generator",
+  "versionName": "2.0.1",
   "versionCode": 1,
   "minPlatformVersion": 1000,
   "icon": "/common/logo.png",
