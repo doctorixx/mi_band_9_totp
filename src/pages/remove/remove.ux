@@ -1,10 +1,10 @@
 <template>
   <div class="demo-page">
-    <text class="title">{{ text }}</text>
+    <text class="title">{{$t("delete.text")}}</text>
     <text class="title">({{name}})</text>
     <text class="title">{{totpText}}</text>
-    <input class="btn green" type="button" value='удалить' @click="onTotpClick">обновить</input>
-    <input class="btn ref" type="button" value='назад' @click="onExitClick">назад</input>
+    <input class="btn green" type="button" value={{$t("delete.delete")}} @click="onTotpClick"></input>
+    <input class="btn ref" type="button" value={{$t("delete.cancel")}} @click="onExitClick"></input>
   </div>
 </template>
 

@@ -1,1 +1,25 @@
-{"a":{"b":"hello"}}
+{
+    "main": {
+      "add": "Add",
+      "exit": "Exit"
+    },
+    "create_totp": {
+      "next": "next",
+      "edit_help": "to edit click on red field",
+      "name": "Name",
+      "totp": "TOTP",
+      "create": "Create",
+      "cancel": "Cancel"
+    },
+    "delete": {
+      "main_text": "Show totp",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "text": "Do you want to delete totp?"
+    },
+    "show_totp": {
+      "main_text": "Show totp",
+      "update": "Update",
+      "back": "Back"
+    }
+  }

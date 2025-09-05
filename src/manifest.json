@@ -1,8 +1,8 @@
 {
   "package": "ru.doctorixx.totpapp",
   "name": "TOTP Generator",
-  "versionName": "2.0.1",
-  "versionCode": 1,
+  "versionName": "2.1.1",
+  "versionCode": 1, 
   "minPlatformVersion": 1000,
   "icon": "/common/logo.png",
   "deviceTypeList": [

@@ -2,11 +2,11 @@
 <template>
   <div>
     <div class="page" style="flex-direction: column">
-      <text class="help-text">Имя</text>
+      <text class="help-text">{{ $t("create_totp.name") }}</text>
       <text class="text" @click="changeState" @longpress="onexit">
         {{ textValue }}
       </text>
-      <text class="help-text">для редактирования нажмите на поле</text>
+      <text class="help-text">{{ $t("create_totp.edit_help") }}</text>
       <input type="button" class="btn" value="далее" @click="heh" />
       <input-method
         hide="{{ hide }}"

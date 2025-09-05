@@ -26,10 +26,10 @@
         style="background-color: green"
         @click="create_page"
       >
-        <text class="cent">     add</text>
+        <text class="cent">{{ $t("main.add") }}</text>
       </list-item>
       <list-item class="item" type="list-item" style="background-color: green" @click="exit">
-        <text class="cent">    выход</text>
+        <text class="cent">{{ $t("main.exit") }}</text>
       </list-item>
       <list-item class="item" type="list-item" style="background-color: green" @click="task1">
         <text class="cent">test1</text>

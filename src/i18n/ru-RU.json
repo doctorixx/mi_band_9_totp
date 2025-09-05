@@ -1,0 +1,26 @@
+{
+    "main": {
+      "add": "Добавить",
+      "exit": "Выход"
+    },
+    "create_totp": {
+      "next": "Далее",
+      "edit_help": "для редактирования нажмите на красное поле",
+      "name": "Название",
+      "totp": "TOTP",
+      "create": "Создать",
+      "cancel": "Отмена"
+    },
+    "delete": {
+      "main_text": "Показать TOTP",
+      "delete": "Удалить",
+      "cancel": "Отмена",
+      "text": "Вы хотите удалить TOTP?"
+    },
+    "show_totp": {
+      "main_text": "Показать TOTP",
+      "update": "Обновить",
+      "back": "Назад"
+    }
+  }
+  
